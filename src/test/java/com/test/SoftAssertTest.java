@@ -15,24 +15,35 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
-public class NewTest {
+public class SoftAssertTest {
 	
 	  WebDriver driver;
-	  
+	
 	  @Test
 	  public void validLoginTest() {
 		  driver.findElement(By.id("login2")).click();
 		  
 		  //providing credentials for valid 
-		  driver.findElement(By.id("loginusernam")).sendKeys("vetri1734");
+		  driver.findElement(By.id("loginusername")).sendKeys("vetri1734");
 		  driver.findElement(By.id("loginpassword")).sendKeys("1234");
 		  
 		  driver.findElement(By.xpath("//button[text()=\"Log in\"]")).click();
 		  
+		  WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+		  
+		  wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nameofuser")));
+		  
+		  String actual=driver.findElement(By.id("nameofuser")).getText();
+		 
+		  SoftAssert softAssert=new SoftAssert();
+		  softAssert.assertTrue((!actual.contains("Welcome")));
+		  
+		  softAssert.assertAll();
 	  }
 	  
-	  @Test(dependsOnMethods="validLoginTest")
+	  @Test
 	  public void invalidUserName() {
 		  driver.findElement(By.id("login2")).click();
 		  
@@ -47,8 +58,14 @@ public class NewTest {
 		  wait.until(ExpectedConditions.alertIsPresent());
 		  Alert alert=driver.switchTo().alert();
 		  
-		  System.out.println(alert.getText());
+		  String expected="User does not exist.";
+		  
+		  SoftAssert softAssert=new SoftAssert();
+		  
+		  softAssert.assertNotEquals(alert.getText(), expected);
 		  alert.accept();
+		  
+		  softAssert.assertAll();
 		  
 	  }
 	  
@@ -67,12 +84,14 @@ public class NewTest {
 		  wait.until(ExpectedConditions.alertIsPresent());
 		  Alert alert=driver.switchTo().alert();
 		  
-		  System.out.println(alert.getText());
+		  String expected="Wrong password.";
+		  
+		  Assert.assertEquals(alert.getText(), expected);
 		  alert.accept();
 		  
 	  }
 	  
-	  @BeforeMethod
+	  @BeforeMethod(alwaysRun = true)
 	  public void beforeTest() {
 		  ChromeOptions options=new ChromeOptions();
 		  
@@ -85,7 +104,7 @@ public class NewTest {
 		  driver.get("https://www.demoblaze.com/");
 	  }
 	  
-	  @AfterMethod
+	  @AfterMethod(alwaysRun = true)
 	  public void afterTest() {
 		  driver.quit();
 	  }

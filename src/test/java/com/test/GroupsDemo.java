@@ -16,23 +16,24 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
-public class NewTest {
+public class GroupsDemo {
 	
 	  WebDriver driver;
 	  
-	  @Test
+	  @Test(groups="groupA")
 	  public void validLoginTest() {
 		  driver.findElement(By.id("login2")).click();
 		  
 		  //providing credentials for valid 
-		  driver.findElement(By.id("loginusernam")).sendKeys("vetri1734");
+		  driver.findElement(By.id("loginusername")).sendKeys("vetri1734");
 		  driver.findElement(By.id("loginpassword")).sendKeys("1234");
 		  
 		  driver.findElement(By.xpath("//button[text()=\"Log in\"]")).click();
 		  
+		  System.out.println("Executed validLoginTest");
 	  }
 	  
-	  @Test(dependsOnMethods="validLoginTest")
+	  @Test(groups="groupA")
 	  public void invalidUserName() {
 		  driver.findElement(By.id("login2")).click();
 		  
@@ -47,12 +48,14 @@ public class NewTest {
 		  wait.until(ExpectedConditions.alertIsPresent());
 		  Alert alert=driver.switchTo().alert();
 		  
-		  System.out.println(alert.getText());
+		  //System.out.println(alert.getText());
 		  alert.accept();
+		 
+		  System.out.println("Executed invalid username");
 		  
 	  }
 	  
-	  @Test
+	  @Test(dependsOnGroups="groupA")
 	  public void invalidPassword() {
 		  driver.findElement(By.id("login2")).click();
 		  
@@ -67,12 +70,14 @@ public class NewTest {
 		  wait.until(ExpectedConditions.alertIsPresent());
 		  Alert alert=driver.switchTo().alert();
 		  
-		  System.out.println(alert.getText());
+		  //System.out.println(alert.getText());
 		  alert.accept();
+		  
+		  System.out.println("Executed dependant method");
 		  
 	  }
 	  
-	  @BeforeMethod
+	  @BeforeMethod(alwaysRun = true)
 	  public void beforeTest() {
 		  ChromeOptions options=new ChromeOptions();
 		  
@@ -85,7 +90,7 @@ public class NewTest {
 		  driver.get("https://www.demoblaze.com/");
 	  }
 	  
-	  @AfterMethod
+	  @AfterMethod(alwaysRun = true)
 	  public void afterTest() {
 		  driver.quit();
 	  }
