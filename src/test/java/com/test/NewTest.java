@@ -25,7 +25,7 @@ public class NewTest {
 		  driver.findElement(By.id("login2")).click();
 		  
 		  //providing credentials for valid 
-		  driver.findElement(By.id("loginusernam")).sendKeys("vetri1734");
+		  driver.findElement(By.id("loginusername")).sendKeys("vetri1734");
 		  driver.findElement(By.id("loginpassword")).sendKeys("1234");
 		  
 		  driver.findElement(By.xpath("//button[text()=\"Log in\"]")).click();

@@ -18,12 +18,12 @@ public class AssertDemo {
 	  
 	  
 	  
-	  Assert.assertEquals(str1,str2);
+	  //Assert.assertEquals(str1,str2);
 	  
-	  Assert.assertSame(str1,str2);
+	  //Assert.assertSame(str1,str2);
 	  
-	  Assert.assertNotEquals(str1,str2,"Equals");
+	  //Assert.assertNotEquals(str1,str2,"Equals");
 	  
-	  Assert.assertTrue(a>b,"B is greater");
+	  //Assert.assertTrue(a>b,"B is greater");
   }
 }

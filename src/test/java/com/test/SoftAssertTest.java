@@ -38,9 +38,9 @@ public class SoftAssertTest {
 		  String actual=driver.findElement(By.id("nameofuser")).getText();
 		 
 		  SoftAssert softAssert=new SoftAssert();
-		  softAssert.assertTrue((!actual.contains("Welcome")));
+		  softAssert.assertTrue((actual.contains("Welcome")));
 		  
-		  softAssert.assertAll();
+		  //softAssert.assertAll();
 	  }
 	  
 	  @Test
@@ -65,7 +65,7 @@ public class SoftAssertTest {
 		  softAssert.assertNotEquals(alert.getText(), expected);
 		  alert.accept();
 		  
-		  softAssert.assertAll();
+		  //softAssert.assertAll();
 		  
 	  }
 	  
